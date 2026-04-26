@@ -7,7 +7,8 @@
     "dev": "tsx watch src/server.ts",
     "build": "tsc -p tsconfig.json",
     "start": "node dist/server.js",
-    "check": "tsc --noEmit -p tsconfig.json"
+    "check": "tsc --noEmit -p tsconfig.json",
+    "build:full": "cd ../client && npm install && npm run build && cd ../server && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
