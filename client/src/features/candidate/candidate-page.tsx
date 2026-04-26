@@ -27,7 +27,6 @@ export const CandidatePage = () => {
   const [isSuggesting, setIsSuggesting] = useState(false)
   const [suggestError, setSuggestError] = useState<string | null>(null)
 
-  // authData is guaranteed by ProtectedRoute
   const accessToken = authData!.tokens.accessToken
   const { role } = authData!.user
 
@@ -92,7 +91,6 @@ export const CandidatePage = () => {
       setIsCreatingCandidate(false)
     }
   }
-
 
   useEffect(() => {
     void loadCandidates()

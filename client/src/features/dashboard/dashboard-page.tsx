@@ -152,7 +152,7 @@ const ManagerStats = ({ data }: { data: ManagerDashboard }) => {
 
   return (
     <div className="space-y-6">
-      {/* Stat cards */}
+      {}
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
         <StatCard label="Кандидатів" value={data.candidates.total} color="slate" to="/candidates" />
         <StatCard label="Вільні" value={data.candidates.available} color="emerald" to="/candidates" />
@@ -160,7 +160,7 @@ const ManagerStats = ({ data }: { data: ManagerDashboard }) => {
         <StatCard label="Компаній" value={data.companies.total} color="violet" to="/companies/all" />
       </div>
 
-      {/* Charts row */}
+      {}
       <div className="grid gap-6 lg:grid-cols-2">
         <ChartCard title="Кандидати — доступність">
           {candidatePieData.length === 0 ? (
@@ -255,7 +255,7 @@ const ClientStats = ({ data }: { data: ClientDashboard }) => {
 
   return (
     <div className="space-y-6">
-      {/* Stat cards */}
+      {}
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
         <StatCard label="Компаній" value={data.companies.total} color="violet" to="/companies" />
         <StatCard label="Відкритих позицій" value={data.positions.open} color="sky" to="/companies" />
@@ -263,7 +263,7 @@ const ClientStats = ({ data }: { data: ClientDashboard }) => {
         <StatCard label="Активних" value={data.bookings.approved} color="emerald" to="/my-bookings" />
       </div>
 
-      {/* Charts row */}
+      {}
       <div className="grid gap-6 lg:grid-cols-2">
         <ChartCard title="Мої запити — статуси">
           {bookingsPieData.length === 0 ? (

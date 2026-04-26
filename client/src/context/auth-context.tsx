@@ -10,8 +10,7 @@ interface AuthContextValue {
   isInitializing: boolean
   setSession(data: AuthResponse): void
   clearSession(): void
-  /** Fetch wrapper that auto-refreshes the access token on 401, then retries once. */
-  apiFetch(input: string, init?: RequestInit): Promise<Response>
+    apiFetch(input: string, init?: RequestInit): Promise<Response>
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
@@ -28,7 +27,7 @@ const loadStoredAuth = (): AuthResponse | null => {
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [authData, setAuthData] = useState<AuthResponse | null>(loadStoredAuth)
   const [isInitializing, setIsInitializing] = useState<boolean>(() => loadStoredAuth() !== null)
-  // Ref to always have latest authData inside apiFetch without re-creating it
+
   const authDataRef = useRef(authData)
   authDataRef.current = authData
 
@@ -44,8 +43,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem(STORAGE_KEY)
   }, [])
 
-  // On mount: if we have stored tokens, verify the access token.
-  // If it's expired (401), attempt a silent refresh. If refresh also fails, clear the session.
   useEffect(() => {
     const stored = loadStoredAuth()
     if (!stored) {
@@ -56,7 +53,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     authService
       .me(stored.tokens.accessToken)
       .then(() => {
-        // Token still valid — nothing to do
+
       })
       .catch(async () => {
         try {
@@ -69,15 +66,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       .finally(() => {
         setIsInitializing(false)
       })
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [])
 
-  /**
-   * Drop-in replacement for fetch() that:
-   * 1. Injects the Authorization header automatically
-   * 2. On 401, silently refreshes the token and retries once
-   * 3. On refresh failure, clears the session (user is sent to login)
-   */
-  const apiFetch = useCallback(async (input: string, init: RequestInit = {}): Promise<Response> => {
+    const apiFetch = useCallback(async (input: string, init: RequestInit = {}): Promise<Response> => {
     const current = authDataRef.current
 
     const doFetch = (token: string) =>

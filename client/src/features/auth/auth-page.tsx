@@ -5,7 +5,6 @@ import type { AuthResponse, LoginPayload, RegisterPayload } from './auth-types'
 import { LoginForm } from './login-form'
 import { RegisterForm } from './register-form'
 
-// Legacy standalone page kept for reference. Routing is now handled by App.tsx.
 export const AuthPage = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [authData, setAuthData] = useState<AuthResponse | null>(null)

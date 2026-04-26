@@ -497,7 +497,7 @@ export const CompanyDetailPage = () => {
           </section>
         </div>
 
-        {/* Employees section */}
+        {}
         <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
           <div className="flex items-center justify-between gap-4">
             <h2 className="text-lg font-semibold text-slate-900">Співробітники</h2>
@@ -540,7 +540,7 @@ export const CompanyDetailPage = () => {
           )}
         </section>
 
-        {/* Hiring history section */}
+        {}
         <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
           <div className="flex items-center justify-between gap-4">
             <h2 className="text-lg font-semibold text-slate-900">Архів найму</h2>

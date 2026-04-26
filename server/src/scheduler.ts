@@ -1,7 +1,7 @@
 import { CandidateModel } from './modules/candidate/candidate-schema.js'
 import { CandidateBookingModel } from './modules/booking/booking-schema.js'
 
-const INTERVAL_MS = 60 * 60 * 1000 // every hour
+const INTERVAL_MS = 60 * 60 * 1000
 
 const syncCandidateAvailability = async (now: Date) => {
   const activeApprovedBookings = await CandidateBookingModel.find({
@@ -53,7 +53,7 @@ export const expireBookings = async () => {
 }
 
 export const startScheduler = () => {
-  // Run immediately on startup to handle any missed expirations
+
   Promise.all([expireBookings(), syncCandidateAvailability(new Date())]).catch((error: unknown) =>
     console.error('[scheduler] Error on startup run:', error),
   )

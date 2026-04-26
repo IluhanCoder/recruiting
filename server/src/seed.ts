@@ -1,9 +1,3 @@
-/**
- * Seed script — fills the DB with realistic demo data.
- * Run:  npx tsx src/seed.ts
- *
- * WARNING: clears ALL existing data from every collection before seeding.
- */
 
 import 'dotenv/config'
 
@@ -19,8 +13,6 @@ import { PositionModel } from './modules/position/position-schema.js'
 import { SkillModel } from './modules/skill/skill-schema.js'
 import { UserModel } from './modules/user/user-schema.js'
 
-// ─── helpers ─────────────────────────────────────────────────────────────────
-
 const daysAgo = (n: number) => new Date(Date.now() - n * 86_400_000)
 const daysFromNow = (n: number) => new Date(Date.now() + n * 86_400_000)
 const pick = <T>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)]
@@ -30,25 +22,23 @@ const pickN = <T>(arr: T[], n: number): T[] => {
 }
 const rand = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min
 
-// ─── raw data pools ───────────────────────────────────────────────────────────
-
 const ALL_SKILLS = [
-  // Frontend
+
   'React', 'Vue.js', 'Angular', 'TypeScript', 'JavaScript', 'Next.js', 'Nuxt.js',
   'Tailwind CSS', 'SCSS/SASS', 'Redux', 'Zustand', 'GraphQL',
-  // Backend
+
   'Node.js', 'Python', 'Java', 'Go', 'Rust', 'PHP', 'C#', '.NET', 'Spring Boot',
   'Django', 'FastAPI', 'NestJS', 'Express.js', 'Kotlin',
-  // Databases
+
   'PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'Elasticsearch', 'ClickHouse',
-  // DevOps / Cloud
+
   'Docker', 'Kubernetes', 'AWS', 'GCP', 'Azure', 'Terraform', 'CI/CD',
   'GitHub Actions', 'Ansible', 'Linux',
-  // Mobile
+
   'React Native', 'Flutter', 'iOS (Swift)', 'Android (Kotlin)',
-  // Data / AI
+
   'Machine Learning', 'TensorFlow', 'PyTorch', 'Data Analysis', 'Pandas', 'SQL',
-  // Other
+
   'REST API', 'WebSocket', 'Microservices', 'gRPC', 'System Design',
 ]
 
@@ -115,8 +105,6 @@ const CHAT_MESSAGES_POOL = {
   ],
 }
 
-// ─── main ─────────────────────────────────────────────────────────────────────
-
 const SALT = 10
 const DEFAULT_PASSWORD = 'password123'
 
@@ -127,7 +115,6 @@ async function seed() {
   await mongoose.connect(mongoUri)
   console.log('Connected to MongoDB')
 
-  // ── Wipe everything ──────────────────────────────────────────────────────
   await Promise.all([
     UserModel.deleteMany({}),
     CandidateModel.deleteMany({}),
@@ -140,13 +127,11 @@ async function seed() {
   ])
   console.log('Cleared existing data')
 
-  // ── Skills ───────────────────────────────────────────────────────────────
   const skillDocs = await SkillModel.insertMany(
     ALL_SKILLS.map((name) => ({ name, nameLower: name.toLowerCase() })),
   )
   console.log(`Created ${skillDocs.length} skills`)
 
-  // ── Managers ─────────────────────────────────────────────────────────────
   const passwordHash = await bcrypt.hash(DEFAULT_PASSWORD, SALT)
 
   const managers = await UserModel.insertMany([
@@ -171,7 +156,6 @@ async function seed() {
   ])
   console.log(`Created ${managers.length} managers`)
 
-  // ── Clients + Companies ───────────────────────────────────────────────────
   const clientData = [
     {
       fullName: 'Микола Захаренко',
@@ -256,7 +240,6 @@ async function seed() {
       teamMemberIds: [],
     })
 
-    // link company to user
     user.companyId = String(company._id)
     user.companyProfile = {
       name: data.company.name,
@@ -274,7 +257,6 @@ async function seed() {
   }
   console.log(`Created ${clients.length} clients and ${companies.length} companies`)
 
-  // ── Candidates ────────────────────────────────────────────────────────────
   const candidatePool: {
     fullName: string
     skills: string[]
@@ -284,7 +266,6 @@ async function seed() {
     isOpenEndedAvailability: boolean
   }[] = []
 
-  // Skill clusters for realistic profiles
   const clusters = [
     ['React', 'TypeScript', 'Next.js', 'Tailwind CSS', 'Redux'],
     ['Vue.js', 'TypeScript', 'Nuxt.js', 'SCSS/SASS', 'GraphQL'],
@@ -375,7 +356,6 @@ async function seed() {
   )
   console.log(`Created ${candidateDocs.length} candidates`)
 
-  // ── Positions ─────────────────────────────────────────────────────────────
   const positionDocs: mongoose.Document[] = []
 
   for (let ci = 0; ci < companies.length; ci++) {
@@ -388,7 +368,6 @@ async function seed() {
       const title = needs[p] ?? pick(POSITION_TITLES)
       const seniority = pick(['junior', 'middle', 'senior'] as const)
 
-      // Closed/completed positions (created months ago)
       const closedPos = await PositionModel.create({
         title,
         seniority: 'middle',
@@ -403,7 +382,6 @@ async function seed() {
       })
       positionDocs.push(closedPos)
 
-      // Active open position
       const openPos = await PositionModel.create({
         title,
         seniority,
@@ -421,13 +399,11 @@ async function seed() {
   }
   console.log(`Created ${positionDocs.length} positions`)
 
-  // ── Bookings ──────────────────────────────────────────────────────────────
   const availableCandidates = candidateDocs.filter((c) => c.availability === 'available')
   const leasedCandidates = candidateDocs.filter((c) => c.availability === 'leased')
 
   let bookingCount = 0
 
-  // Completed bookings (past, closed positions)
   const closedPositions = positionDocs.filter((p) => p.status === 'closed')
   for (const pos of closedPositions) {
     const candidate = pick(availableCandidates)
@@ -447,7 +423,6 @@ async function seed() {
     bookingCount++
   }
 
-  // Approved bookings for leased candidates
   const openPositions = positionDocs.filter((p) => p.status === 'open')
   for (const cand of leasedCandidates.slice(0, Math.min(leasedCandidates.length, 5))) {
     const pos = pick(openPositions)
@@ -467,7 +442,6 @@ async function seed() {
     bookingCount++
   }
 
-  // New (pending) bookings from clients
   for (const client of clients) {
     const pos = pick(openPositions)
     const candidate = pick(availableCandidates)
@@ -486,7 +460,6 @@ async function seed() {
 
   console.log(`Created ${bookingCount} bookings`)
 
-  // ── Chats + Messages ──────────────────────────────────────────────────────
   const manager0 = managers[0]
   const manager1 = managers[1]
 
@@ -523,7 +496,6 @@ async function seed() {
   }
   console.log(`Created ${clients.length} chats and ${chatMsgCount} messages`)
 
-  // ── Summary ───────────────────────────────────────────────────────────────
   console.log('\n=== Seed complete ===')
   console.log(`  Skills:     ${skillDocs.length}`)
   console.log(`  Managers:   ${managers.length}`)

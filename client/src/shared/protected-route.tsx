@@ -6,7 +6,7 @@ export const ProtectedRoute = () => {
   const { authData, isInitializing } = useAuth()
 
   if (isInitializing) {
-    return null // silent — token verification in progress
+    return null
   }
 
   if (!authData) {

@@ -115,7 +115,7 @@ export const MyBookingsPage = () => {
           </p>
         ) : null}
 
-        {/* Status filter tabs */}
+        {}
         <div className="flex flex-wrap gap-2 rounded-2xl border border-slate-200 bg-white p-2 shadow-sm">
           {STATUS_FILTERS.map(({ key, label }) => (
             <button
@@ -134,7 +134,7 @@ export const MyBookingsPage = () => {
           ))}
         </div>
 
-        {/* Bookings list */}
+        {}
         {isLoading ? (
           <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
             <p className="text-sm text-slate-500">Завантажуємо запити...</p>
@@ -152,7 +152,7 @@ export const MyBookingsPage = () => {
                 key={booking.id}
                 className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
               >
-                {/* Top: status badge */}
+                {}
                 <div className="flex items-start justify-between gap-4">
                   <div className="space-y-1">
                     <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500">
@@ -245,7 +245,7 @@ export const MyBookingsPage = () => {
                   )}
                 </div>
 
-                {/* Dates + hours */}
+                {}
                 <div className="mt-3 flex flex-wrap gap-4 text-sm text-slate-600">
                   <span>
                     <span className="text-slate-400">Дати: </span>
@@ -262,7 +262,7 @@ export const MyBookingsPage = () => {
                   </span>
                 </div>
 
-                {/* Client comment */}
+                {}
                 {booking.comment ? (
                   <div className="mt-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
                     <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">
@@ -272,7 +272,7 @@ export const MyBookingsPage = () => {
                   </div>
                 ) : null}
 
-                {/* Manager comment */}
+                {}
                 {booking.managerComment ? (
                   <div className="mt-3 rounded-xl border border-sky-200 bg-sky-50 px-4 py-3 text-sm text-sky-800">
                     <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-sky-400">

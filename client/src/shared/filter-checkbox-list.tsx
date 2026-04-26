@@ -6,23 +6,14 @@ export interface FilterCheckboxListOption {
 }
 
 interface FilterCheckboxListProps {
-  /** Panel heading (uppercase label above the list) */
-  title: string
+    title: string
   options: FilterCheckboxListOption[]
   selected: Set<string>
   onToggle: (value: string) => void
-  /** Shown when options is empty (before any search) */
-  emptyMessage?: string
+    emptyMessage?: string
   searchPlaceholder?: string
-  /**
-   * When true, wraps the list in a sidebar-panel card
-   * (rounded-2xl glass card with padding).
-   * When false, renders only search + list – useful inside forms.
-   * Default: true
-   */
-  panel?: boolean
-  /** Extra Tailwind class on the outer wrapper */
-  className?: string
+    panel?: boolean
+    className?: string
   disabled?: boolean
 }
 
