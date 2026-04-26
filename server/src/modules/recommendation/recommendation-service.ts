@@ -109,6 +109,7 @@ export const getRecommendations = async (authUser: AuthUser): Promise<Recommende
       availableFrom: candidateFrom ?? new Date(0),
       availableTo: candidateTo,
       isOpenEndedAvailability: candidate.isOpenEndedAvailability,
+      completedHiresCompaniesCount: 0,
       matchedSkills: matchedSkillsList,
       matchedPositions: matchedPositionsList,
       matchScore: matchedSkillsList.length,

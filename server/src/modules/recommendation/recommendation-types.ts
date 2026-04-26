@@ -13,6 +13,7 @@ export interface RecommendedCandidate {
   availableFrom: Date
   availableTo?: Date
   isOpenEndedAvailability: boolean
+  completedHiresCompaniesCount: number
   matchedSkills: string[]
   matchedPositions: RecommendedPosition[]
   matchScore: number
