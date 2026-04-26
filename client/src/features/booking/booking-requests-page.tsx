@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { useAuth } from '../../context/auth-context'
+import { API_BASE } from '../../shared/api-base'
 import { AppNav } from '../../shared/app-nav'
 import { Modal } from '../../shared/modal'
 import { bookingService } from './booking-service'
@@ -130,7 +131,7 @@ export const BookingRequestsPage = () => {
   const handleDevExpire = async () => {
     setIsExpiring(true)
     try {
-      const res = await fetch('/api/dev/expire-bookings', { method: 'POST' })
+      const res = await fetch(`${API_BASE}/api/dev/expire-bookings`, { method: 'POST' })
       const data: unknown = await res.json()
       console.log('[DEV] expire-bookings →', data)
       await loadBookings()

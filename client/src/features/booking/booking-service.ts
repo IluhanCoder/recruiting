@@ -5,8 +5,9 @@ import type {
   RespondToBookingPayload,
   UpdateBookingPayload,
 } from './booking-types'
+import { API_BASE } from '../../shared/api-base'
 
-const API_BASE_PATH = '/api/bookings'
+const API_BASE_PATH = `${API_BASE}/api/bookings`
 
 const parseError = async (response: Response): Promise<string> => {
   try {

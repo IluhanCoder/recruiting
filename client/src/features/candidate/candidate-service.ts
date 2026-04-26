@@ -1,6 +1,7 @@
 import type { CandidateSummary, CreateCandidatePayload, UpdateCandidatePayload } from './candidate-types'
+import { API_BASE } from '../../shared/api-base'
 
-const API_BASE_PATH = '/api/candidates'
+const API_BASE_PATH = `${API_BASE}/api/candidates`
 
 const parseError = async (response: Response): Promise<string> => {
   try {

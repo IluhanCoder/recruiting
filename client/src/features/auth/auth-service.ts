@@ -1,6 +1,7 @@
 import type { AuthResponse, LoginPayload, RegisterPayload } from './auth-types'
+import { API_BASE } from '../../shared/api-base'
 
-const API_BASE_PATH = '/api/auth'
+const API_BASE_PATH = `${API_BASE}/api/auth`
 
 const parseError = async (response: Response): Promise<string> => {
   try {

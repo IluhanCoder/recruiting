@@ -1,6 +1,7 @@
 import type { CreateSkillPayload, SkillSummary, UpdateSkillPayload } from './skill-types'
+import { API_BASE } from '../../shared/api-base'
 
-const API_BASE_PATH = '/api/skills'
+const API_BASE_PATH = `${API_BASE}/api/skills`
 
 const parseError = async (response: Response): Promise<string> => {
   try {

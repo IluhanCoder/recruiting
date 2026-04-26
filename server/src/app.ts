@@ -1,10 +1,5 @@
 import cors from 'cors'
 import express from 'express'
-import path from 'path'
-import { fileURLToPath } from 'url'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
 
 import { errorHandler } from './middlewares/error-handler.js'
 import { notFoundHandler } from './middlewares/not-found-handler.js'
@@ -22,7 +17,11 @@ import { expireBookings } from './scheduler.js'
 
 export const app = express()
 
-app.use(cors())
+const allowedOrigins = process.env.CLIENT_ORIGIN
+  ? [process.env.CLIENT_ORIGIN, 'http://localhost:5173']
+  : ['http://localhost:5173']
+
+app.use(cors({ origin: allowedOrigins, credentials: true }))
 app.use(express.json({ limit: '10mb' }))
 
 app.use('/api/auth', authRouter)
@@ -64,14 +63,5 @@ app.get('/', (_request, response) => {
   })
 })
 
-if (process.env.NODE_ENV === 'production') {
-  const clientDist = path.resolve(__dirname, '../../client/dist')
-  app.use(express.static(clientDist))
-  app.get('*', (_request, response) => {
-    response.sendFile(path.join(clientDist, 'index.html'))
-  })
-} else {
-  app.use(notFoundHandler)
-}
-
+app.use(notFoundHandler)
 app.use(errorHandler)

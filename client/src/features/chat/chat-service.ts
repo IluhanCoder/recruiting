@@ -1,6 +1,7 @@
 import type { ChatMessageSummary, ChatSummary, CreateChatMessagePayload } from './chat-types'
+import { API_BASE } from '../../shared/api-base'
 
-const API_BASE_PATH = '/api/chats'
+const API_BASE_PATH = `${API_BASE}/api/chats`
 
 const parseError = async (response: Response): Promise<string> => {
   try {

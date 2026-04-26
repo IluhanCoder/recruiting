@@ -1,6 +1,7 @@
 import type { RecommendedCandidate } from './recommendation-types'
+import { API_BASE } from '../../shared/api-base'
 
-const API_BASE_PATH = '/api/recommendations'
+const API_BASE_PATH = `${API_BASE}/api/recommendations`
 
 const parseError = async (response: Response): Promise<string> => {
   try {

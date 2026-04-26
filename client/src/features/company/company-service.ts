@@ -1,6 +1,7 @@
 import type { CompanyEmployee, CompanyHiringRecord, CompanySummary, CreateCompanyPayload, UpdateCompanyPayload } from './company-types'
+import { API_BASE } from '../../shared/api-base'
 
-const API_BASE_PATH = '/api/companies'
+const API_BASE_PATH = `${API_BASE}/api/companies`
 
 const parseError = async (response: Response): Promise<string> => {
   try {

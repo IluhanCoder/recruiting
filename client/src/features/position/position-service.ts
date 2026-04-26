@@ -1,6 +1,7 @@
 import type { CreatePositionPayload, PositionSummary, RestorePositionPayload, UpdatePositionPayload } from './position-types'
+import { API_BASE } from '../../shared/api-base'
 
-const API_BASE_PATH = '/api/positions'
+const API_BASE_PATH = `${API_BASE}/api/positions`
 
 const parseError = async (response: Response): Promise<string> => {
   try {

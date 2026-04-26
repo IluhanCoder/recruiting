@@ -15,6 +15,7 @@ import {
 } from 'recharts'
 
 import { useAuth } from '../../context/auth-context'
+import { API_BASE } from '../../shared/api-base'
 import { AppNav } from '../../shared/app-nav'
 
 interface ManagerDashboard {
@@ -30,10 +31,10 @@ interface ClientDashboard {
   bookings: { total: number; new: number; approved: number; completed: number }
 }
 
-const API_BASE = '/api/dashboard'
+const API_BASE_DASHBOARD = `${API_BASE}/api/dashboard`
 
 const fetchDashboard = async (accessToken: string): Promise<{ dashboard: ManagerDashboard | ClientDashboard }> => {
-  const res = await fetch(API_BASE, {
+  const res = await fetch(API_BASE_DASHBOARD, {
     headers: { Authorization: `Bearer ${accessToken}` },
   })
   if (!res.ok) throw new Error('Помилка завантаження дашборду')
